@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cleverlose | Премиум конфиги для CS2 и Valorant</title>
+    <meta name="description" content="Cleverlose - лучшие конфиги для CS2, Valorant и Apex Legends. Премиум качество, безопасность, постоянные обновления.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background-color: #0a0a0a;
+            overflow-x: hidden;
+        }
+
+        /* Variables */
+        :root {
+            --gradient-primary: linear-gradient(135deg, #7209b7 0%, #c77dff 50%, #e0aaff 100%);
+            --gradient-secondary: linear-gradient(135deg, #ff006e 0%, #fb5607 100%);
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #0f0f23;
+            --bg-tertiary: #1a1a2e;
+            --bg-card: rgba(26, 26, 46, 0.8);
+            --bg-glass: rgba(199, 125, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-tertiary: rgba(255, 255, 255, 0.6);
+            --accent-primary: #7209b7;
+            --accent-success: #06ffa5;
+            --accent-error: #ff006e;
+            --border-primary: rgba(199, 125, 255, 0.2);
+            --shadow-purple: 0 0 20px rgba(199, 125, 255, 0.3);
+            --shadow-glow: 0 0 30px rgba(114, 9, 183, 0.5);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Modal System */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-primary);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-tertiary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-primary);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-primary);
+            border-radius: 0.75rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-primary);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 0 3px rgba(114, 9, 183, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-error {
+            color: var(--accent-error);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .form-input.error {
+            border-color: var(--accent-error);
+        }
+
+        .form-input.error + .form-error {
+            display: block;
+        }
+
+        .form-success {
+            color: var(--accent-success);
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .form-input.success + .form-error + .form-success {
+            display: block;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .modal-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .modal-btn .loading {
+            display: none;
+        }
+
+        .modal-btn.loading .btn-text {
+            opacity: 0;
+        }
+
+        .modal-btn.loading .loading {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+
+        .modal-switch {
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+        }
+
+        .modal-switch a {
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-switch a:hover {
+            text-decoration: underline;
+        }
+
+        .code-inputs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .code-input {
+            width: 3rem;
+            height: 3rem;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-primary);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .code-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(114, 9, 183, 0.1);
+        }
+
+        .resend-code {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .resend-link {
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .resend-link:hover {
+            color: var(--accent-primary);
+        }
+
+        .resend-link.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-primary);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 1.5rem;
+            max-width: 1536px;
+            margin: 0 auto;
+        }
+
+        .nav-logo a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            font-size: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-nav {
+            padding: 0.5rem 1rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-login {
+            padding: 0.5rem 1rem;
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-primary);
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .btn-login:hover {
+            background: var(--bg-glass);
+            color: var(--text-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at center, var(--bg-secondary) 0%, var(--bg-primary) 70%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(199, 125, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(199, 125, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .gradient-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.4;
+            animation: orbFloat 12s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--gradient-primary);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-secondary);
+            bottom: 20%;
+            right: 15%;
+            animation-delay: 4s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -30px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-primary);
+            border-radius: 9999px;
+            color: var(--accent-primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-title {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(2.25rem, 8vw, 3.75rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .title-line {
+            display: block;
+        }
+
+        .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            text-decoration: none;
+            min-width: 180px;
+            height: 56px;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(114, 9, 183, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .btn-content {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--accent-primary);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sections */
+        .configs, .features, .pricing, .support {
+            padding: 6rem 0;
+        }
+
+        .configs {
+            background: var(--bg-primary);
+        }
+
+        .features {
+            background: var(--bg-secondary);
+        }
+
+        .pricing {
+            background: var(--bg-primary);
+        }
+
+        .support {
+            background: var(--gradient-primary);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--bg-glass);
+            color: var(--accent-primary);
+            border: 1px solid var(--border-primary);
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-badge.light {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: clamp(1.875rem, 5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .section-title.light {
+            color: white;
+        }
+
+        .section-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .section-description.light {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0 1rem;
+            border-top: 1px solid var(--border-primary);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            align-items: start;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-primary);
+            color: var(--text-tertiary);
+            font-size: 0.875rem;
+        }
+
+        .footer-disclaimer {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">Cleverlose</span>
+                </a>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link active">Главная</a></li>
+                <li><a href="#configs" class="nav-link">Конфиги</a></li>
+                <li><a href="#features" class="nav-link">Возможности</a></li>
+                <li><a href="#pricing" class="nav-link">Цены</a></li>
+                <li><a href="#support" class="nav-link">Поддержка</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="#pricing" class="btn-nav">Купить</a>
+                <button class="btn-login">Войти</button>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="grid-overlay"></div>
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+        </div>
+        
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-crown"></i>
+                <span>Premium Gaming Configs</span>
+            </div>
+            
+            <h1 class="hero-title">
+                <span class="title-line">Доминируй в</span>
+                <span class="title-line gradient-text">CS2 & Valorant</span>
+                <span class="title-line">с Cleverlose</span>
+            </h1>
+            
+            <p class="hero-description">
+                Профессиональные конфиги от топовых игроков. Улучши свой геймплей 
+                с настройками, которые используют про-игроки
+            </p>
+            
+            <div class="hero-buttons">
+                <a href="#pricing" class="btn btn-primary">
+                    <span class="btn-content">
+                        <i class="fas fa-download"></i>
+                        <span>Скачать конфиги</span>
+                    </span>
+                </a>
+                
+                <button class="btn btn-secondary" id="watch-demo">
+                    <span class="btn-content">
+                        <i class="fas fa-play"></i>
+                        <span>Смотреть демо</span>
+                    </span>
+                </button>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Активных пользователей</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Время работы</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Поддержка</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Configs Section -->
+    <section id="configs" class="configs">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Наши продукты</span>
+                <h2 class="section-title">
+                    <span>Премиум</span>
+                    <span class="gradient-text">конфиги</span>
+                </h2>
+                <p class="section-description">
+                    Выбери игру и получи доступ к лучшим настройкам от профессионалов
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Преимущества</span>
+                <h2 class="section-title">
+                    <span>Почему выбирают</span>
+                    <span class="gradient-text">Cleverlose?</span>
+                </h2>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Тарифы</span>
+                <h2 class="section-title">
+                    <span>Выбери свой</span>
+                    <span class="gradient-text">план</span>
+                </h2>
+                <p class="section-description">
+                    Гибкие тарифы для любого бюджета. Начни с базового плана 
+                    или получи максимум возможностей с премиум подпиской
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section id="support" class="support">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge light">Поддержка</span>
+                <h2 class="section-title light">
+                    <span>Нужна помощь?</span>
+                    <span style="background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #e0e0e0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Мы здесь!</span>
+                </h2>
+                <p class="section-description light">
+                    Наша команда поддержки готова помочь 24/7. Выбери удобный способ связи
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Authentication Modals -->
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Вход в аккаунт</h2>
+                <p class="modal-subtitle">Добро пожаловать обратно в Cleverlose</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="loginUsername" placeholder="Логин или email" required>
+                    <div class="form-error">Введите корректный логин или email</div>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" id="loginPassword" placeholder="Пароль" required>
+                    <div class="form-error">Введите пароль</div>
+                </div>
+                <button type="submit" class="modal-btn">
+                    <span class="btn-text">Войти</span>
+                    <i class="fas fa-spinner loading"></i>
+                </button>
+            </form>
+            <div class="modal-switch">
+                Нет аккаунта? <a onclick="switchModal('loginModal', 'registerModal')">Зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Регистрация</h2>
+                <p class="modal-subtitle">Создайте аккаунт в Cleverlose</p>
+            </div>
+            <form id="registerForm">
+                <div class="form-group">
+                    <input type="email" class="form-input" id="registerEmail" placeholder="Email" required>
+                    <div class="form-error">Введите корректный email (украинские домены не поддерживаются)</div>
+                    <div class="form-success">Email корректный</div>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" id="registerUsername" placeholder="Логин" required>
+                    <div class="form-error">Логин должен содержать от 3 до 20 символов</div>
+                    <div class="form-success">Логин доступен</div>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" id="registerPassword" placeholder="Пароль" required>
+                    <div class="form-error">Пароль должен содержать минимум 8 символов</div>
+                    <div class="form-success">Пароль надежный</div>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" id="registerConfirmPassword" placeholder="Подтвердите пароль" required>
+                    <div class="form-error">Пароли не совпадают</div>
+                    <div class="form-success">Пароли совпадают</div>
+                </div>
+                <button type="submit" class="modal-btn">
+                    <span class="btn-text">Зарегистрироваться</span>
+                    <i class="fas fa-spinner loading"></i>
+                </button>
+            </form>
+            <div class="modal-switch">
+                Уже есть аккаунт? <a onclick="switchModal('registerModal', 'loginModal')">Войти</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div class="modal-overlay" id="verificationModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal('verificationModal')">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Подтверждение email</h2>
+                <p class="modal-subtitle">Введите код, отправленный на <span id="verificationEmail"></span></p>
+            </div>
+            <form id="verificationForm">
+                <div class="code-inputs">
+                    <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                    <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                    <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                    <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                    <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                    <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                </div>
+                <div class="resend-code">
+                    <span class="resend-link" id="resendCode">Отправить код повторно</span>
+                </div>
+                <button type="submit" class="modal-btn">
+                    <span class="btn-text">Подтвердить</span>
+                    <i class="fas fa-spinner loading"></i>
+                </button>
+            </form>
+            <div class="modal-switch">
+                <a onclick="switchModal('verificationModal', 'registerModal')">Изменить email</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">🎉 Добро пожаловать!</h2>
+                <p class="modal-subtitle">Ваш аккаунт успешно создан</p>
+            </div>
+            <button class="modal-btn" onclick="closeModal('successModal')">
+                <span class="btn-text">Продолжить</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-icon">⚡</span>
+                    <span class="logo-text">Cleverlose</span>
+                </div>
+                <div></div>
+                <div></div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Cleverlose. Все права защищены.</p>
+                <p class="footer-disclaimer">
+                    Cleverlose не несет ответственности за использование конфигов. 
+                    Используйте на свой страх и риск.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Authentication System
+        class AuthSystem {
+            constructor() {
+                this.currentUser = null;
+                this.verificationCode = null;
+                this.verificationEmail = null;
+                this.resendTimer = null;
+                this.resendCountdown = 60;
+                
+                this.init();
+            }
+            
+            init() {
+                this.bindEvents();
+                this.setupCodeInputs();
+                this.checkAuthState();
+            }
+            
+            bindEvents() {
+                // Login button
+                document.querySelector('.btn-login').addEventListener('click', () => {
+                    this.openModal('loginModal');
+                });
+                
+                // Forms
+                document.getElementById('loginForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleLogin();
+                });
+                
+                document.getElementById('registerForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleRegister();
+                });
+                
+                document.getElementById('verificationForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleVerification();
+                });
+                
+                // Real-time validation
+                document.getElementById('registerEmail').addEventListener('input', (e) => {
+                    this.validateEmail(e.target);
+                });
+                
+                document.getElementById('registerUsername').addEventListener('input', (e) => {
+                    this.validateUsername(e.target);
+                });
+                
+                document.getElementById('registerPassword').addEventListener('input', (e) => {
+                    this.validatePassword(e.target);
+                });
+                
+                document.getElementById('registerConfirmPassword').addEventListener('input', (e) => {
+                    this.validateConfirmPassword(e.target);
+                });
+                
+                // Resend code
+                document.getElementById('resendCode').addEventListener('click', () => {
+                    this.resendVerificationCode();
+                });
+            }
+            
+            setupCodeInputs() {
+                const codeInputs = document.querySelectorAll('.code-input');
+                
+                codeInputs.forEach((input, index) => {
+                    input.addEventListener('input', (e) => {
+                        const value = e.target.value;
+                        
+                        // Only allow numbers
+                        if (!/^\d$/.test(value)) {
+                            e.target.value = '';
+                            return;
+                        }
+                        
+                        // Move to next input
+                        if (value && index < codeInputs.length - 1) {
+                            codeInputs[index + 1].focus();
+                        }
+                        
+                        // Auto-submit when all fields are filled
+                        const allFilled = Array.from(codeInputs).every(input => input.value);
+                        if (allFilled) {
+                            setTimeout(() => {
+                                document.getElementById('verificationForm').dispatchEvent(new Event('submit'));
+                            }, 100);
+                        }
+                    });
+                    
+                    input.addEventListener('keydown', (e) => {
+                        // Handle backspace
+                        if (e.key === 'Backspace' && !e.target.value && index > 0) {
+                            codeInputs[index - 1].focus();
+                        }
+                    });
+                    
+                    input.addEventListener('paste', (e) => {
+                        e.preventDefault();
+                        const paste = e.clipboardData.getData('text');
+                        const digits = paste.replace(/\D/g, '').slice(0, 6);
+                        
+                        digits.split('').forEach((digit, i) => {
+                            if (codeInputs[i]) {
+                                codeInputs[i].value = digit;
+                            }
+                        });
+                        
+                        if (digits.length === 6) {
+                            setTimeout(() => {
+                                document.getElementById('verificationForm').dispatchEvent(new Event('submit'));
+                            }, 100);
+                        }
+                    });
+                });
+            }
+            
+            validateEmail(input) {
+                const email = input.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                
+                // Ukrainian domains to block
+                const ukrainianDomains = [
+                    'ukr.net', 'i.ua', 'meta.ua', 'bigmir.net', 'online.ua',
+                    'gmail.ua', 'yandex.ua', 'mail.ua', 'inbox.ua'
+                ];
+                
+                const isValidFormat = emailRegex.test(email);
+                const domain = email.split('@')[1]?.toLowerCase();
+                const isUkrainianDomain = ukrainianDomains.includes(domain);
+                
+                if (!email) {
+                    this.setFieldState(input, 'neutral');
+                } else if (!isValidFormat || isUkrainianDomain) {
+                    this.setFieldState(input, 'error');
+                } else {
+                    this.setFieldState(input, 'success');
+                }
+                
+                return isValidFormat && !isUkrainianDomain;
+            }
+            
+            validateUsername(input) {
+                const username = input.value.trim();
+                const isValid = username.length >= 3 && username.length <= 20 && /^[a-zA-Z0-9_]+$/.test(username);
+                
+                if (!username) {
+                    this.setFieldState(input, 'neutral');
+                } else if (!isValid) {
+                    this.setFieldState(input, 'error');
+                } else {
+                    this.setFieldState(input, 'success');
+                }
+                
+                return isValid;
+            }
+            
+            validatePassword(input) {
+                const password = input.value;
+                const isValid = password.length >= 8;
+                
+                if (!password) {
+                    this.setFieldState(input, 'neutral');
+                } else if (!isValid) {
+                    this.setFieldState(input, 'error');
+                } else {
+                    this.setFieldState(input, 'success');
+                }
+                
+                // Also validate confirm password if it exists
+                const confirmPassword = document.getElementById('registerConfirmPassword');
+                if (confirmPassword.value) {
+                    this.validateConfirmPassword(confirmPassword);
+                }
+                
+                return isValid;
+            }
+            
+            validateConfirmPassword(input) {
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = input.value;
+                const isValid = confirmPassword === password && confirmPassword.length > 0;
+                
+                if (!confirmPassword) {
+                    this.setFieldState(input, 'neutral');
+                } else if (!isValid) {
+                    this.setFieldState(input, 'error');
+                } else {
+                    this.setFieldState(input, 'success');
+                }
+                
+                return isValid;
+            }
+            
+            setFieldState(input, state) {
+                input.classList.remove('error', 'success');
+                if (state === 'error') {
+                    input.classList.add('error');
+                } else if (state === 'success') {
+                    input.classList.add('success');
+                }
+            }
+            
+            async handleLogin() {
+                const username = document.getElementById('loginUsername').value.trim();
+                const password = document.getElementById('loginPassword').value;
+                const submitBtn = document.querySelector('#loginForm .modal-btn');
+                
+                if (!username || !password) {
+                    this.showError('Заполните все поля');
+                    return;
+                }
+                
+                this.setButtonLoading(submitBtn, true);
+                
+                try {
+                    // Simulate API call
+                    await this.delay(1500);
+                    
+                    // For demo purposes, accept any credentials
+                    this.currentUser = {
+                        username: username,
+                        email: username.includes('@') ? username : `${username}@example.com`
+                    };
+                    
+                    this.saveAuthState();
+                    this.updateUI();
+                    this.closeModal('loginModal');
+                    this.showSuccess('Вход выполнен успешно!');
+                    
+                } catch (error) {
+                    this.showError('Неверный логин или пароль');
+                } finally {
+                    this.setButtonLoading(submitBtn, false);
+                }
+            }
+            
+            async handleRegister() {
+                const email = document.getElementById('registerEmail').value.trim();
+                const username = document.getElementById('registerUsername').value.trim();
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                const submitBtn = document.querySelector('#registerForm .modal-btn');
+                
+                // Validate all fields
+                const isEmailValid = this.validateEmail(document.getElementById('registerEmail'));
+                const isUsernameValid = this.validateUsername(document.getElementById('registerUsername'));
+                const isPasswordValid = this.validatePassword(document.getElementById('registerPassword'));
+                const isConfirmPasswordValid = this.validateConfirmPassword(document.getElementById('registerConfirmPassword'));
+                
+                if (!isEmailValid || !isUsernameValid || !isPasswordValid || !isConfirmPasswordValid) {
+                    this.showError('Исправьте ошибки в форме');
+                    return;
+                }
+                
+                this.setButtonLoading(submitBtn, true);
+                
+                try {
+                    // Generate verification code
+                    this.verificationCode = this.generateVerificationCode();
+                    this.verificationEmail = email;
+                    
+                    // Send verification email
+                    const response = await fetch('send-verification.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            code: this.verificationCode
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (!result.success) {
+                        throw new Error(result.message);
+                    }
+                    
+                    // Store registration data temporarily
+                    this.pendingRegistration = {
+                        email,
+                        username,
+                        password
+                    };
+                    
+                    // Show verification modal
+                    document.getElementById('verificationEmail').textContent = email;
+                    this.switchModal('registerModal', 'verificationModal');
+                    this.startResendTimer();
+                    
+                    this.showSuccess(`Код подтверждения отправлен на ${email}`);
+                    
+                } catch (error) {
+                    console.error('Registration error:', error);
+                    this.showError('Ошибка при отправке кода. Проверьте email и попробуйте позже.');
+                } finally {
+                    this.setButtonLoading(submitBtn, false);
+                }
+            }
+            
+            async handleVerification() {
+                const codeInputs = document.querySelectorAll('.code-input');
+                const enteredCode = Array.from(codeInputs).map(input => input.value).join('');
+                const submitBtn = document.querySelector('#verificationForm .modal-btn');
+                
+                if (enteredCode.length !== 6) {
+                    this.showError('Введите полный код');
+                    return;
+                }
+                
+                this.setButtonLoading(submitBtn, true);
+                
+                try {
+                    // Simulate API call
+                    await this.delay(1000);
+                    
+                    if (enteredCode === this.verificationCode) {
+                        // Registration successful
+                        this.currentUser = {
+                            username: this.pendingRegistration.username,
+                            email: this.pendingRegistration.email
+                        };
+                        
+                        this.saveAuthState();
+                        this.updateUI();
+                        this.switchModal('verificationModal', 'successModal');
+                        
+                        // Clear temporary data
+                        this.pendingRegistration = null;
+                        this.verificationCode = null;
+                        this.verificationEmail = null;
+                        
+                    } else {
+                        this.showError('Неверный код подтверждения');
+                        // Clear inputs
+                        codeInputs.forEach(input => input.value = '');
+                        codeInputs[0].focus();
+                    }
+                    
+                } catch (error) {
+                    this.showError('Ошибка при подтверждении. Попробуйте позже.');
+                } finally {
+                    this.setButtonLoading(submitBtn, false);
+                }
+            }
+            
+            async resendVerificationCode() {
+                const resendLink = document.getElementById('resendCode');
+                
+                if (resendLink.classList.contains('disabled')) {
+                    return;
+                }
+                
+                try {
+                    // Generate new code
+                    this.verificationCode = this.generateVerificationCode();
+                    
+                    // Send new verification email
+                    const response = await fetch('send-verification.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email: this.verificationEmail,
+                            code: this.verificationCode
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (!result.success) {
+                        throw new Error(result.message);
+                    }
+                    
+                    this.showSuccess('Новый код отправлен на email');
+                    
+                    // Restart timer
+                    this.startResendTimer();
+                    
+                } catch (error) {
+                    console.error('Resend error:', error);
+                    this.showError('Ошибка при отправке кода');
+                }
+            }
+            
+            generateVerificationCode() {
+                return Math.floor(100000 + Math.random() * 900000).toString();
+            }
+            
+            startResendTimer() {
+                const resendLink = document.getElementById('resendCode');
+                this.resendCountdown = 60;
+                
+                resendLink.classList.add('disabled');
+                
+                this.resendTimer = setInterval(() => {
+                    this.resendCountdown--;
+                    resendLink.textContent = `Отправить повторно (${this.resendCountdown}с)`;
+                    
+                    if (this.resendCountdown <= 0) {
+                        clearInterval(this.resendTimer);
+                        resendLink.classList.remove('disabled');
+                        resendLink.textContent = 'Отправить код повторно';
+                    }
+                }, 1000);
+            }
+            
+            setButtonLoading(button, loading) {
+                if (loading) {
+                    button.classList.add('loading');
+                    button.disabled = true;
+                } else {
+                    button.classList.remove('loading');
+                    button.disabled = false;
+                }
+            }
+            
+            openModal(modalId) {
+                document.getElementById(modalId).classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+            
+            closeModal(modalId) {
+                document.getElementById(modalId).classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // Clear forms
+                const modal = document.getElementById(modalId);
+                const forms = modal.querySelectorAll('form');
+                forms.forEach(form => {
+                    form.reset();
+                    const inputs = form.querySelectorAll('.form-input');
+                    inputs.forEach(input => {
+                        input.classList.remove('error', 'success');
+                    });
+                });
+            }
+            
+            switchModal(fromModalId, toModalId) {
+                this.closeModal(fromModalId);
+                setTimeout(() => {
+                    this.openModal(toModalId);
+                }, 150);
+            }
+            
+            saveAuthState() {
+                localStorage.setItem('cleverlose_user', JSON.stringify(this.currentUser));
+            }
+            
+            checkAuthState() {
+                const savedUser = localStorage.getItem('cleverlose_user');
+                if (savedUser) {
+                    this.currentUser = JSON.parse(savedUser);
+                    this.updateUI();
+                }
+            }
+            
+            updateUI() {
+                const loginBtn = document.querySelector('.btn-login');
+                
+                if (this.currentUser) {
+                    loginBtn.textContent = this.currentUser.username;
+                    loginBtn.onclick = () => this.logout();
+                } else {
+                    loginBtn.textContent = 'Войти';
+                    loginBtn.onclick = () => this.openModal('loginModal');
+                }
+            }
+            
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('cleverlose_user');
+                this.updateUI();
+                this.showSuccess('Вы вышли из аккаунта');
+            }
+            
+            showSuccess(message) {
+                // Simple notification - you can enhance this
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--accent-success);
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 0.5rem;
+                    z-index: 10001;
+                    font-weight: 600;
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+            
+            showError(message) {
+                // Simple notification - you can enhance this
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--accent-error);
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 0.5rem;
+                    z-index: 10001;
+                    font-weight: 600;
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+            
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+        
+        // Global modal functions
+        function closeModal(modalId) {
+            authSystem.closeModal(modalId);
+        }
+        
+        function switchModal(fromModalId, toModalId) {
+            authSystem.switchModal(fromModalId, toModalId);
+        }
+        
+        // Initialize auth system
+        const authSystem = new AuthSystem();
+        
+        // Simple navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
