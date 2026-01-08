@@ -1,0 +1,15 @@
+{
+  "name": "cleverlose-website",
+  "version": "1.0.0",
+  "description": "Cleverlose gaming configs website with email verification",
+  "main": "cleverlose-single.html",
+  "scripts": {
+    "build": "echo 'No build step required'"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.7"
+  },
+  "keywords": ["gaming", "configs", "cs2", "valorant"],
+  "author": "Cleverlose",
+  "license": "MIT"
+}
