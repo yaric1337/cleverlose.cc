@@ -1339,7 +1339,7 @@
                     this.verificationEmail = email;
                     
                     // Send verification email
-                    const response = await fetch('send-verification.php', {
+                    const response = await fetch('/.netlify/functions/send-verification', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -1436,7 +1436,7 @@
                     this.verificationCode = this.generateVerificationCode();
                     
                     // Send new verification email
-                    const response = await fetch('send-verification.php', {
+                    const response = await fetch('/.netlify/functions/send-verification', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
